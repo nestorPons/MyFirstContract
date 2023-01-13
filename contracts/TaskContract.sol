@@ -4,11 +4,13 @@ pragma solidity >=0.8.5 <0.9.0;
 contract TaskContract {
     uint256 counter;
 
+    enum States{ DELETE, INITIAL, DONE, ERROR } States status;
+
     struct Task {
         uint256 id;
         string name;
         string description;
-        uint8 status; // 0 ini 1 done 2 delete
+        States status; // 0 delete 1 Initial 2 Done
         uint256 createAt;
     }
 
@@ -18,49 +20,74 @@ contract TaskContract {
     constructor(){
         autoCreate();
     }
-    function hello() public pure returns(string memory){
-        return "Hola mundo 2";
-    }
+   
     function autoCreate() internal {
-        create("T1", "Tarea 1");
-        create("T2", "Tarea 2");
-        create("T3", "Tarea 3");
-        create("T4", "Tarea 4");
-        create("T5", "Tarea 5");
-        create("T6", "Tarea 6");
+        createTask("", "");
+        createTask("T1", "Tarea 1");
+        createTask("T2", "Tarea 2");
+        createTask("T3", "Tarea 3");
+        createTask("T4", "Tarea 4");
+        createTask("T5", "Tarea 5");
+        createTask("T6", "Tarea 6");
     }
 
     function getLength() public view returns(uint256){
         return atasks.length;
     }
-    function create(string memory name, string memory description) public {
+    function createTask(string memory name, string memory description) public {
         uint id = atasks.length;
-        atasks.push(Task(id, name, description, 0, block.timestamp));
+        atasks.push(Task(id, name, description, States.INITIAL, block.timestamp));
     }
-    function getTask(uint256 id) public view returns(string memory name, string memory description){
-        return (tasks[id].name, tasks[id].description) ; 
+    function updateName(uint id, string memory value) public{
+        uint i = getIndex(id);
+        atasks[i].name = value;
     }
-    function getaTask(uint _id) public view returns(uint id, string memory name, string memory description){
+    function updateDescription(uint id, string memory value) public{
+        uint i = getIndex(id);
+        atasks[i].description = value;
+    }
+    function deleteTask(uint id) public {
+        updateStatus(id, 0);
+    }
+    function resetTask(uint id) public {
+        updateStatus(id, 1);
+    }
+    function doneTask(uint id) public{
+        updateStatus(id, 2);
+    }
+    function updateStatus(uint id, uint8 idStatus ) internal {
+        uint i = getIndex(id);
+        atasks[i].status = 
+            idStatus == 0 ? States.DELETE : 
+            idStatus == 1 ? States.INITIAL :
+            idStatus == 2 ? States.DONE :
+            States.ERROR ;
+        if(atasks[i].status == States.ERROR){
+            revert("ERROR: Index out bound!");
+        }
+    }
+    function getTask( uint id) public view returns(Task memory){
         uint len = atasks.length;
         uint ir = 0;  
         for (uint i = 0; i < len ; i++) {
-            if (atasks[i].id == _id) return (atasks[i].id, atasks[i].name, atasks[i].description); 
+            if (atasks[i].id == id) return atasks[i]; 
             ir = len-i-1;  
             if (ir <= i ) break;
-            if (atasks[ir].id == _id) (atasks[i].id, atasks[ir].name, atasks[ir].description); 
+            if (atasks[ir].id == id) return atasks[i]; 
         }
 
-        return (0, "","");
+        return atasks[0];
     }
-    function getName(uint256 id)
-        public
-        view
-        returns (
-            string memory
-        )
-    {
-        Task memory tsk = tasks[id];
-        return tsk.name;
-    }
+    function getIndex(uint id) internal view returns(uint){
+        uint len = atasks.length;
+        uint ir = 0;  
+        for (uint i = 0; i < len ; i++) {
+            if (atasks[i].id == id) return i; 
+            ir = len-i-1;  
+            if (ir <= i ) break;
+            if (atasks[ir].id == id) return ir; 
+        }
 
+        return 0;
+    }
 }
