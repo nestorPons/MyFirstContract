@@ -1,0 +1,28 @@
+{
+    "name": "taskscontract",
+    "version": "1.0.0",
+    "description": "Dapp for create tasks to get rewards for childrens",
+    "main": "truffle-config.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "dev": "lite-server",
+        "test": "truffle test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestorPons/MyFirstContract.git"
+    },
+    "author": "Néstor Pons",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nestorPons/MyFirstContract/issues"
+    },
+    "homepage": "https://github.com/nestorPons/MyFirstContract#readme",
+    "dependencies": {
+        "jquery": "^3.6.3",
+        "lite-server": "^2.6.1",
+        "mini.css": "^3.0.1"
+    }
+}
