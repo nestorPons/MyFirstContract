@@ -1,0 +1,36 @@
+h1,
+h2 {
+    width: 100%;
+    text-align: center;
+}
+
+form {
+    padding-right: 1rem;
+}
+
+input,
+.input-group {
+    width: 100%;
+}
+
+div[class^="col-"]>.row {
+    background-color: rgb(8, 78, 143);
+    margin: 1rem;
+    padding: 1rem;
+}
+
+span[class^="icon-"] {
+    float: right;
+}
+
+#template_card {
+    display: none;
+}
+
+.name {
+    text-transform: capitalize;
+}
+
+.card.large {
+    max-width: 100%;
+}

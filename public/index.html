@@ -6,12 +6,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAPP Task</title>
-    <link rel="stylesheet" href="./libs/mini.css/dist/mini-dark.min.css">
-
+    <link rel="stylesheet" href="mini.css/dist/mini-dark.min.css">
+    <link rel="stylesheet" href="src/css/styles.css">
+    <script src="jquery/dist/jquery.min.js"></script>
 </head>
 
 <body>
-    <h1>Hello Wold</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <div class="row">
+                    <h1>DAPP Tasks</h1>
+                    <em>Descentralized task creater</em>
+                </div>
+                <div class="row">
+                    <h2>Add Task</h2>
+                    <form id="frmTask" class="">
+                        <div class="input-group">
+                            <label for="username">Name</label>
+                            <input type="text" id="name" placeholder="Name" />
+                        </div>
+                        <div class="input-group">
+                            <label for="description">Description</label>
+                            <input type="text" id="description" placeholder="description" />
+                        </div>
+                        <div class="button-group">
+                            <input type="submit" value="Add" class="primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-7 col-sm-12 fluid">
+                <div class="row">
+                    <h2>List Tasks</h2>
+                </div>
+                <div id="container_cards" class="row">
+                    <div class="card large" id="template_card">
+                        <div class="section">
+                            <span class="icon-alert secondary status"></span>
+                            <h3 class="name"></h3>
+                        </div>
+
+                        <div class="section description">Description</div>
+                        <div class="button-group">
+                            <button class="delete secondary">Done</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="src/js/main.js"></script>
 </body>
 
 </html>

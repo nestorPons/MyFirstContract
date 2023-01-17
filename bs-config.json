@@ -2,10 +2,11 @@
     "server": {
         "baseDir": [
             "./public",
-            "./build/contracts"
+            "./build/contracts",
+            "./node_modules"
         ],
         "routes": {
-            "libs": "./node_modules"
+            "/libs": "./node_modules"
         }
     },
     "port": "3000"

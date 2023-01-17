@@ -24,7 +24,6 @@ contract TaskContract {
     
     constructor(){
         self.addTime = 7 days; 
-        createTask("", ""); //Record trash
     }
 
     function getLength() public view returns(uint256){
