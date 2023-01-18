@@ -4,10 +4,7 @@
             "./public",
             "./build/contracts",
             "./node_modules"
-        ],
-        "routes": {
-            "/libs": "./node_modules"
-        }
+        ]
     },
     "port": "3000"
 }

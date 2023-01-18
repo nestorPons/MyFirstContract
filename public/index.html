@@ -13,15 +13,16 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-12">
-                <div class="row">
+        <div class="row struct-row">
+            <div class="col-md-3 col-sm-12">
+                <div class="wor">
                     <h1>DAPP Tasks</h1>
-                    <em>Descentralized task creater</em>
+                    <span>Descentralized task creater for house work kids</span>
                 </div>
-                <div class="row">
+
+                <div class="wor">
                     <h2>Add Task</h2>
-                    <form id="frmTask" class="">
+                    <form id="taskFrm" class="">
                         <div class="input-group">
                             <label for="username">Name</label>
                             <input type="text" id="name" placeholder="Name" />
@@ -36,11 +37,11 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-7 col-sm-12 fluid">
-                <div class="row">
+            <div class="col-md-7 col-sm-12">
+                <div class="wor">
                     <h2>List Tasks</h2>
                 </div>
-                <div id="container_cards" class="row">
+                <div id="container_cards" class="wor">
                     <div class="card large" id="template_card">
                         <div class="section">
                             <span class="icon-alert secondary status"></span>
@@ -53,11 +54,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
     </div>
+    <script src="@truffle/contract/browser-dist/truffle-contract.min.js"></script>
     <script src="src/js/main.js"></script>
 </body>
 

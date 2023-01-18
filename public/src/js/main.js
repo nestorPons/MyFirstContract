@@ -1,27 +1,57 @@
 const app = {
     provider: null,
+    address: "0x8C1f5289f78b33315dceb4313e45384490cA1b6A",
+    task: {
+        data: [],
+        test: function() {
+            console.log(this.data)
+        },
+        add: function(name, description) {
+            console.log('Add task...')
+            let date1 = new Date()
+            let date2 = new Date()
+            let id = this.data.length
+            date2.setDate(date1.getDate() + 1)
+            this.data[id] = {
+                id: id,
+                name: name,
+                description: description,
+                status: 1, // 0 delete 1 Initial 2 Done
+                create: date1.getTime(),
+                expire: date2.getTime(),
+            }
+            this.print(id)
+        },
+        print: function(id) {
+            const data = this.data[id]
+
+            let card = $('#template_card').clone()
+            card.attr('id', data.id)
+            card.find('.name').text(data.name)
+            card.find('.description').text(data.description)
+
+            $('#container_cards').append(card)
+        },
+        created: function(id) {
+            const data = this.data[id]
+            this.parent.contract.createTask() //TODO
+        }
+
+    },
     init: async function() {
         console.log('App constructor... ')
+        this.task.parent = this;
         this.functions()
         await this.connectEthereum()
         await this.loadContracts()
     },
     functions: function() {
-        $('#frmTask').on('submit', e => {
+        $('#taskFrm').on('submit', e => {
             e.preventDefault()
-            this.addTask();
+            let name = $('#name').val()
+            let description = $('#description').val()
+            this.task.add(name, description);
         })
-    },
-    addTask: function() {
-        console.log('Add task...')
-        let name = $('#name').val()
-        let description = $('#description').val()
-        let card = $('#template_card').clone()
-        card.attr('id', '')
-        card.find('.name').text(name)
-        card.find('.description').text(description)
-        $('#container_cards').append(card)
-
     },
     connectEthereum: async function() {
         if (window.ethereum) {
@@ -35,9 +65,13 @@ const app = {
         }
     },
     loadContracts: async function() {
+        console.log('Load contracts...')
         const res = await fetch("TaskContract.json")
-        const json = await res.json()
-        console.log(json)
+        const artifac = await res.json()
+        const truffle = TruffleContract(artifac)
+        truffle.setProvider(this.provider)
+        this.contract = await truffle.deployed()
+
     }
 }
 

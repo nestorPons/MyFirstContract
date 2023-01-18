@@ -13,7 +13,7 @@ input,
     width: 100%;
 }
 
-div[class^="col-"]>.row {
+.wor {
     background-color: rgb(8, 78, 143);
     margin: 1rem;
     padding: 1rem;

@@ -16,24 +16,18 @@ contract TaskContract {
 
     struct Self {
         uint256 counter;
-        uint addTime; 
         Task[] tasks; 
     }
     
     Self self;
     
-    constructor(){
-        self.addTime = 7 days; 
-    }
 
     function getLength() public view returns(uint256){
         return self.tasks.length;
     }
 
-    function createTask(string memory name, string memory description) public {
-        uint id = self.tasks.length;
-        uint expire = block.timestamp + self.addTime; 
-        self.tasks.push(Task(id, name, description, States.INITIAL, block.timestamp, expire));
+    function createTask(uint id, string memory name, string memory description, uint create, uint expire) public {
+        self.tasks.push(Task(id, name, description, States.INITIAL, create, expire));
     }
 
     function updateName(uint id, string memory value) public{
