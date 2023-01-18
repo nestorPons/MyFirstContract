@@ -34,7 +34,7 @@ const app = {
         },
         created: function(id) {
             const data = this.data[id]
-            this.parent.contract.createTask() //TODO
+            this.parent.contract.createTask(id, data.name, data.description, data.create, data.expire)
         }
 
     },

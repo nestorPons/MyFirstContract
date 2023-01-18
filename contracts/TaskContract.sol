@@ -21,13 +21,16 @@ contract TaskContract {
     
     Self self;
     
+    constructor(){
+        createTask(0,"","",0); // trash register
+    }
 
     function getLength() public view returns(uint256){
         return self.tasks.length;
     }
 
-    function createTask(uint id, string memory name, string memory description, uint create, uint expire) public {
-        self.tasks.push(Task(id, name, description, States.INITIAL, create, expire));
+    function createTask(uint id, string memory name, string memory description, uint expire) public {
+        self.tasks.push(Task(id, name, description, States.INITIAL, block.timestamp , expire));
     }
 
     function updateName(uint id, string memory value) public{
@@ -50,6 +53,11 @@ contract TaskContract {
 
     function doneTask(uint id) public{
         updateStatus(id, 2);
+    }
+
+    function updateExpire(uint id, uint timestamp) public {
+        uint i = getIndex(id);
+        self.tasks[i].expire = timestamp;
     }
 
     function updateStatus(uint id, uint8 idStatus ) internal {
@@ -86,7 +94,6 @@ contract TaskContract {
             if (ir <= i ) break;
             if (self.tasks[ir].id == id) return ir; 
         }
-
         return 0;
     }
 
@@ -101,32 +108,5 @@ contract TaskContract {
     function getExpire(uint id) public view returns(uint){
         uint i = getIndex(id);
         return self.tasks[i].expire;
-    }
-    
-    function changeTimeExpire(uint id, uint numDays) public{
-        uint i = getIndex(id);
-        if (numDays == 1){
-            self.addTime = 1 days;
-        } else if (numDays == 2){
-            self.addTime = 2 days;
-        } else if (numDays == 3){
-            self.addTime = 3 days;
-        } else if (numDays == 4){
-            self.addTime = 4 days;
-        } else if (numDays == 5){
-            self.addTime = 5 days;
-        } else if (numDays == 6){
-            self.addTime = 6 days;
-        } else if (numDays == 7){
-            self.addTime = 7 days;
-        } else if (numDays == 14){
-            self.addTime = 1 weeks;
-        } else if (numDays == 30){
-            self.addTime = 2 weeks;
-        } else {
-            revert("You must select one of the following items \n 1,2,3,4,5,6,7,14,30");
-        }
-
-        self.tasks[i].expire = self.tasks[1].create + self.addTime; 
     }
 }
