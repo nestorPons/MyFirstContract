@@ -8,7 +8,7 @@
     },
     "scripts": {
         "dev": "lite-server",
-	    "server": "lite-server & disown",
+        "server": "lite-server & disown",
         "test": "truffle test"
     },
     "repository": {
@@ -24,7 +24,6 @@
     "dependencies": {
         "@truffle/contract": "^4.6.12",
         "jquery": "^3.6.3",
-        
         "mini.css": "^3.0.1"
     }
 }

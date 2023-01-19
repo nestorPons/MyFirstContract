@@ -1,6 +1,6 @@
 const app = {
     provider: null,
-    address: "0x8C1f5289f78b33315dceb4313e45384490cA1b6A",
+    accounts: null,
     task: {
         data: [],
         test: function() {
@@ -21,6 +21,7 @@ const app = {
                 expire: date2.getTime(),
             }
             this.print(id)
+            this.created(id)
         },
         print: function(id) {
             const data = this.data[id]
@@ -32,18 +33,24 @@ const app = {
 
             $('#container_cards').append(card)
         },
-        created: function(id) {
+        created: async function(id) {
+            console.log(that.accounts[0])
             const data = this.data[id]
-            this.parent.contract.createTask(id, data.name, data.description, data.create, data.expire)
+            const result = await that.contract.createTask(id, data.name, data.description, data.expire, {
+                from: that.accounts[0]
+            })
         }
-
     },
     init: async function() {
         console.log('App constructor... ')
-        this.task.parent = this;
+        that = this
         this.functions()
         await this.connectEthereum()
         await this.loadContracts()
+        this.render()
+    },
+    render: function() {
+        $('#account_id').text(this.accounts[0])
     },
     functions: function() {
         $('#taskFrm').on('submit', e => {
@@ -57,7 +64,7 @@ const app = {
         if (window.ethereum) {
             console.log('Window ethereum exist!')
             this.provider = window.ethereum
-            await this.provider.request({
+            this.accounts = await this.provider.request({
                 method: 'eth_requestAccounts'
             })
         } else {
@@ -71,7 +78,9 @@ const app = {
         const truffle = TruffleContract(artifac)
         truffle.setProvider(this.provider)
         this.contract = await truffle.deployed()
+        const tsk = await this.contract.getTask(1) //TODO Bucle print contratos
 
+        console.log(tsk)
     }
 }
 
